@@ -5,7 +5,7 @@ from functools import reduce
 
 
 class Order(Identifiable):
-    def __init__(self, id_, customer_id, dish_ids, drinks_ids, bill, time_stamp):
+    def __init__(self, id_, customer_id, dish_ids=None, drinks_ids=None, bill=None, time_stamp=None):
         super().__init__(id_)
         self.customer_id = customer_id
         self.dish_ids = dish_ids

@@ -9,7 +9,7 @@ class CustomerRepo(DataRepo):
         super().__init__(file)
 
     def convert_to_string(self, obj_list):
-        str_list = map(lambda item: f"{item.id_},{item.name},{item.address}", obj_list)
+        str_list = map(lambda item: f"{item.id},{item.name},{item.address}", obj_list)
         return reduce(lambda s1, s2: s1 + '\n' + s2, str_list)
 
     def convert_from_string(self, string):
@@ -19,3 +19,14 @@ class CustomerRepo(DataRepo):
 
         lines = string.split('\n')
         return map(lambda line: line_to_dash(line), lines)
+
+    def search(self, name=None, address=None):
+        customers = self.load()
+        result = None
+        if name is not None:
+            result = list(filter(lambda cus: name.lower() in cus.name.lower(), customers))
+
+        if address is not None:
+            result = list(filter(lambda cus: address.lower() in cus.address.lower(), customers))
+
+        return result
