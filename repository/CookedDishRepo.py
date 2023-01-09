@@ -13,6 +13,9 @@ class CookedDishRepo(DataRepo):
         return reduce(lambda s1, s2: s1 + '\n' + s2, str_list)
 
     def convert_from_string(self, string: str):
+        if string == "":
+            return []
+
         def line_to_dish(line):
             params = line.split(',')
             return CookedDish(int(params[0]), params[1], int(params[2]), int(params[3]), int(params[4]))

@@ -23,5 +23,13 @@ def search_customer_by_address():
     assert c1 == customer1 and c2 == customer2
 
 
+def update_customer_name():
+    repo.update(customer1, "Andrei")
+    c1 = repo.load()[0]
+
+    assert c1.name == "Andrei"
+
+
 search_customer_by_name_test()
 search_customer_by_address()
+update_customer_name()
