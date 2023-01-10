@@ -1,2 +1,2 @@
-0,Cristica,Str. Cristel
-0,Gion,Str. Hatz
+1,Cristica,Str. Cristel
+2,Dadu,Str. Balasa

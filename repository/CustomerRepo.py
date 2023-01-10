@@ -10,7 +10,7 @@ class CustomerRepo(DataRepo):
 
     def convert_to_string(self, obj_list):
         str_list = list(map(lambda item: f"{item.id},{item.name},{item.address}", obj_list))
-        return reduce(lambda s1, s2: s1 + '\n' + s2, str_list)
+        return reduce(lambda s1, s2: s1 + '\n' + s2, str_list) if str_list != [] else ""
 
     def convert_from_string(self, string):
 
