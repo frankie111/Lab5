@@ -27,22 +27,11 @@ class CustomerRepo(DataRepo):
 
     def search(self, name=None, address=None):
         customers = self.load()
-        result = None
+        result = []
         if name is not None:
-            result = list(filter(lambda cus: name.lower() in cus.name.lower(), customers))
+            result += list(filter(lambda cus: name.lower() in cus.name.lower(), customers))
 
         if address is not None:
-            result = list(filter(lambda cus: address.lower() in cus.address.lower(), customers))
+            result += list(filter(lambda cus: address.lower() in cus.address.lower(), customers))
 
         return result
-
-    def update(self, customer, name=None, address=None):
-        customers = self.load()
-        index = customers.index(customer)
-        if name is not None:
-            customer.name = name
-        if address is not None:
-            customer.address = address
-        customers[index] = customer
-
-        self.save(customers)

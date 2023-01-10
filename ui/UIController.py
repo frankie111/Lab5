@@ -1,10 +1,15 @@
 def menu(title_, options):
     title(title_)
 
-    for i in range(len(options)):
-        print(f"{i + 1}. {options[i]}")
+    print_numbered_list(options)
 
-    return input("->")
+    inp = input("->")
+
+    if not inp.isnumeric() or int(inp) not in range(1, len(options) + 1):
+        invalid()
+        return None
+
+    return int(inp)
 
 
 def invalid():
@@ -13,3 +18,8 @@ def invalid():
 
 def title(txt):
     print(f"--{txt}--")
+
+
+def print_numbered_list(lis):
+    for i in range(len(lis)):
+        print(f"{i + 1}. {lis[i]}")

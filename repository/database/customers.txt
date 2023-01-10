@@ -1,1 +1,2 @@
-0,Cristica,Strada
+0,Cristica,Str. Cristel
+0,Gion,Str. Hatz

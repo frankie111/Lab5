@@ -7,6 +7,11 @@ class DataRepo:
         obj_list.append(obj)
         self.save(obj_list)
 
+    def remove(self, obj):
+        obj_list = self.load()
+        obj_list.remove(obj)
+        self.save(obj_list)
+
     def save(self, obj_list):
         self.write_to_file(self.convert_to_string(obj_list))
 

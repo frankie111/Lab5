@@ -8,10 +8,8 @@ class Controller:
 
     def main_menu(self):
         opt = menu("Restaurant app", ["Orders", "Menu", "Customers", "<-Exit"])
-        if not opt.isnumeric():
+        if opt is None:
             self.main_menu()
-
-        opt = int(opt)
 
         match opt:
             case 1:
