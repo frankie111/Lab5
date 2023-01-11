@@ -11,7 +11,7 @@ class OrderRepo(DataRepo):
 
     def convert_to_string(self, obj_list):
         str_list = map(lambda
-                           item: f"{item.id},{item.customer_id},{lis_to_string(item.dish_ids)},{lis_to_string(item.drinks_ids)},{item.costs},{item.time_stamp}",
+                           item: f"{item.id},{item.customer_id},{lis_to_string(item.dish_ids)},{lis_to_string(item.drink_ids)},{item.costs},{item.time_stamp}",
                        obj_list)
         return reduce(lambda s1, s2: s1 + '\n' + s2, str_list)
 

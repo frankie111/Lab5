@@ -1,8 +1,8 @@
 from controller.CustomerController import CustomerController
 from controller.MenuController import MenuController
-from repository.CustomerRepo import CustomerRepo
+from models.Order import Order
 from repository.OrderRepo import OrderRepo
-from ui.UIController import menu, invalid, title, print_numbered_list
+from ui.UIController import menu, invalid, title
 
 
 class OrderController:
@@ -18,10 +18,10 @@ class OrderController:
 
         match opt:
             case 1:
-                self.show_all()
+                self.add()
                 self.menu()
             case 2:
-                self.add()
+                self.show_all()
                 self.menu()
             case 3:
                 self.remove()
@@ -40,40 +40,53 @@ class OrderController:
         customers = self.customer_controller.customer_repo.load()
         opt = menu("Choose Drinks (comma separated)", drinks, check=False)
 
-        drink_list = []
+        drink_ids = []
         if opt != "":
-            drink_list = list(map(lambda id_: drinks[id_ - 1], opt.split(',')))
+            drink_ids = list(map(lambda id_: drinks[int(id_) - 1].id, opt.split(',')))
 
         opt = menu("Choose Dishes (comma separated)", dishes, check=False)
-        dish_list = []
+        dish_ids = []
         if opt != "":
-            dish_list = list(map(lambda id_: dishes[id_ - 1], opt.split(',')))
+            dish_ids = list(map(lambda id_: dishes[int(id_) - 1].id, opt.split(',')))
 
         # select customer:
         opt = menu("Choose customer by", ["show list", "search", "add"])
         if opt is None:
             self.add()
 
+        def select_cust(customers_):
+            opt1 = menu("Select customer", customers_)
+            if opt1 is None:
+                self.add()
+            return customers_[opt1 - 1].id
+
+        customer_id = -1
         match opt:
             case 1:
-                opt1 = menu("Select customer", customers)
-                if opt1 is None:
-                    self.add()
+                customer_id = select_cust(customers)
             case 2:
-                pass
+                filtered = self.customer_controller.search(print_list=False)
+                customer_id = select_cust(filtered)
             case 3:
-                pass
+                self.customer_controller.add()
+                customer_id = customers[-1].id + 1
             case _:
                 self.menu()
+
+        new_order = Order(0, customer_id, dish_ids, drink_ids)
+        new_order.set_time_stamp()
+        new_order.set_costs(drinks, dishes)
+        self.order_repo.add(new_order)
 
     def show_all(self):
         title("Orders List")
         orders = self.order_repo.load()
-        dishes = self.menu_controller.dish_repo.load()
-        drinks = self.menu_controller.drink_repo.load()
-        customers = self.customer_controller.load()
 
-        print_numbered_list(orders)
+        for i in range(len(orders)):
+            customer = self.customer_controller.customer_repo.find_by_id(orders[i].customer_id)
+            drinks = self.menu_controller.drink_repo.find_by_ids(orders[i].drink_ids)
+            dishes = self.menu_controller.dish_repo.find_by_ids(orders[i].dish_ids)
+            print(f"{i + 1}. {orders[i].to_string(customer, drinks, dishes)}")
 
     def remove(self):
         pass

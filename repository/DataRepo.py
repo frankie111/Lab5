@@ -20,6 +20,20 @@ class DataRepo:
         obj_list[ind] = updated_obj
         self.save(obj_list)
 
+    def find_by_id(self, id_):
+        obj_list = self.load()
+        filtered = list(filter(lambda obj: obj.id == id_, obj_list))
+        return filtered[0] if len(filtered) != 0 else None
+
+    def find_by_ids(self, ids):
+        res = []
+        for id_ in ids:
+            obj = self.find_by_id(id_)
+            if obj is not None:
+                res.append(obj)
+
+        return res
+
     def save(self, obj_list):
         self.write_to_file(self.convert_to_string(obj_list))
 
