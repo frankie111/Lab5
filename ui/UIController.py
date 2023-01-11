@@ -1,15 +1,17 @@
-def menu(title_, options, ttype=0):
+def menu(title_, options, ttype=0, check=True):
     title(title_, ttype)
 
     print_numbered_list(options)
 
     inp = input("->")
+    if check:
+        if not inp.isnumeric() or int(inp) not in range(1, len(options) + 1):
+            invalid()
+            return None
 
-    if not inp.isnumeric() or int(inp) not in range(1, len(options) + 1):
-        invalid()
-        return None
+        return int(inp)
 
-    return int(inp)
+    return inp
 
 
 def invalid():
