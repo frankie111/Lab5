@@ -8,3 +8,6 @@ class CookedDish(Dish):
 
     def __eq__(self, other):
         return super().__eq__(other) and self.prep_time == other.prep_time
+
+    def __str__(self):
+        return f"Name: {self.name}, Size: {self.portion_size}, Price: {self.price}, Preparation Time: {self.prep_time}"

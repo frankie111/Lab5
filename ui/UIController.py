@@ -1,5 +1,5 @@
-def menu(title_, options):
-    title(title_)
+def menu(title_, options, ttype=0):
+    title(title_, ttype)
 
     print_numbered_list(options)
 
@@ -16,8 +16,9 @@ def invalid():
     print("Invalid option!")
 
 
-def title(txt):
-    print(f"--{txt}--")
+def title(txt, ttype=0):
+    types = {0: '-', 1: '='}
+    print(f"{types[ttype] * 2}{txt}{types[ttype] * 2}")
 
 
 def print_numbered_list(lis):

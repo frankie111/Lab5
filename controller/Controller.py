@@ -1,10 +1,12 @@
 from controller.CustomerController import CustomerController
+from controller.MenuController import MenuController
 from ui.UIController import menu, invalid
 
 
 class Controller:
     def __init__(self):
         self.customer_controller = CustomerController()
+        self.menu_controller = MenuController()
 
     def main_menu(self):
         opt = menu("Restaurant app", ["Orders", "Menu", "Customers", "<-Exit"])
@@ -15,6 +17,7 @@ class Controller:
             case 1:
                 self.main_menu()
             case 2:
+                self.menu_controller.menu()
                 self.main_menu()
             case 3:
                 self.customer_controller.menu()
