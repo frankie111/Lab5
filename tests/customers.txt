@@ -1,2 +1,1 @@
-0,Andrei,Str. Ciocarliei nr. 19
-1,Gion,Str. Luceafarului nr. 27
+0,Mihai,Str. Ciorilor

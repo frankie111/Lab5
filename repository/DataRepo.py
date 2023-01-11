@@ -14,6 +14,12 @@ class DataRepo:
         obj_list.remove(obj)
         self.save(obj_list)
 
+    def update(self, obj, updated_obj):
+        obj_list = self.load()
+        ind = obj_list.index(obj)
+        obj_list[ind] = updated_obj
+        self.save(obj_list)
+
     def save(self, obj_list):
         self.write_to_file(self.convert_to_string(obj_list))
 

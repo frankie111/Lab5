@@ -1,8 +1,10 @@
+import copy
+
 from models.Customer import Customer
 from repository.CustomerRepo import CustomerRepo
 
-customer1 = Customer(0, "Mihai", "Str. Ciocarliei nr. 19")
-customer2 = Customer(1, "Gion", "Str. Luceafarului nr. 27")
+customer1 = Customer(1, "Mihai", "Str. Ciocarliei nr. 19")
+customer2 = Customer(2, "Gion", "Str. Luceafarului nr. 27")
 
 repo = CustomerRepo("customers.txt")
 
@@ -24,7 +26,9 @@ def search_customer_by_address():
 
 
 def update_customer_name():
-    repo.update(customer1, "Andrei")
+    updated_cust = copy.deepcopy(customer1)
+    updated_cust.name = "Andrei"
+    repo.update(customer1, updated_cust)
     c1 = repo.load()[0]
 
     assert c1.name == "Andrei"
