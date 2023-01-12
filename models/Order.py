@@ -1,5 +1,5 @@
 import functools
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import reduce
 
 from models.Identifiable import Identifiable
@@ -40,8 +40,13 @@ class Order(Identifiable):
         items_list = self.__get_items(drinks, dishes)
         if self.costs == 0:
             self.set_costs(drinks, dishes)
+
+        time = datetime.fromisoformat(self.time_stamp).strftime(" %R ")
+        etd = datetime.fromisoformat(self.compute_etd(dishes)).strftime(" %R ")
+
         bill_lines = list(map(lambda item: f"{item.name} ... {item.price}$", items_list))
         bill_lines.append(f"Your bill is {self.costs}$ worth!")
+        bill_lines.append(f"Ordered at: {time} -> estimated delivery time: {etd}\n")
 
         return reduce(lambda s1, s2: s1 + '\n' + s2, bill_lines)
 
@@ -54,3 +59,8 @@ class Order(Identifiable):
     def to_string(self, customer, drinks, dishes):
         return f"Order '{self.id}' for '{customer.name}' at Address '{customer.address}':\n" \
             + self.generate_bill(drinks, dishes)
+
+    def compute_etd(self, dishes):
+        max_prep_time = max(dishes, key=lambda dish: dish.prep_time).prep_time
+        etd = datetime.fromisoformat(self.time_stamp) + timedelta(minutes=max_prep_time)
+        return etd.isoformat()
