@@ -1,7 +1,8 @@
-def menu(title_, options, ttype=0, check=True):
+def menu(title_, options, ttype=0, check=True, print_options=True):
     title(title_, ttype)
 
-    print_numbered_list(options)
+    if print_options:
+        print_numbered_list(options)
 
     inp = input("->")
     if check:

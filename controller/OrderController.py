@@ -81,12 +81,24 @@ class OrderController:
     def show_all(self):
         title("Orders List")
         orders = self.order_repo.load()
+        print(self.__get_order_list_str(orders))
 
+    def remove(self):
+        title("Remove Order")
+        orders = self.order_repo.load()
+        print(self.__get_order_list_str(orders))
+        opt = menu("Select order to delete", orders, print_options=False)
+        if opt is None:
+            self.remove()
+
+        self.order_repo.remove(orders[opt - 1])
+
+    def __get_order_list_str(self, orders):
+        ord_string = ""
         for i in range(len(orders)):
             customer = self.customer_controller.customer_repo.find_by_id(orders[i].customer_id)
             drinks = self.menu_controller.drink_repo.find_by_ids(orders[i].drink_ids)
             dishes = self.menu_controller.dish_repo.find_by_ids(orders[i].dish_ids)
-            print(f"{i + 1}. {orders[i].to_string(customer, drinks, dishes)}")
+            ord_string += f"\n{i + 1}. {orders[i].to_string(customer, drinks, dishes)}"
 
-    def remove(self):
-        pass
+        return ord_string

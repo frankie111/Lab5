@@ -107,7 +107,7 @@ class MenuController:
         if alcohol != "":
             drink.alcohol = alcohol
 
-        self.dish_repo.save(drinks)
+        self.drink_repo.save(drinks)
 
     def __update_dish(self):
         title("Update Dish")

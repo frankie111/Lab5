@@ -26,7 +26,7 @@ class Order(Identifiable):
     def __get_items(self, drinks, dishes):
         drink_list = list(filter(lambda drink: drink.id in self.drink_ids, drinks))
         dish_list = list(filter(lambda dish: dish.id in self.dish_ids, dishes))
-        return [*dish_list, *drink_list]
+        return [*drink_list, *dish_list]
 
     def generate_costs(self, drinks, dishes):
         items_list = self.__get_items(drinks, dishes)
