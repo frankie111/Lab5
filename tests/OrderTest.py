@@ -14,11 +14,12 @@ customer_repo.save([customer])
 dishes = [CookedDish(0, "Pizza", 450, 12, 15), CookedDish(1, "Ciorba de burta", 350, 24, 45)]
 dish_repo.save(dishes)
 
-order = Order(0, customer.id, [dishes[0].id, dishes[1].id], [])
+order = Order(0, customer.id, dish_ids=[dishes[0].id, dishes[1].id])
+order.set_time_stamp()
 
 
 def order_bill_test():
-    bill = order.generate_bill(dishes, [])
+    bill = order.generate_bill([], dishes)
     assert "Pizza" in bill and "Ciorba de burta" in bill and "36" in bill
 
 
